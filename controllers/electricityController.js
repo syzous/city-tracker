@@ -3,6 +3,7 @@ const multer = require("multer");
 const electricityService = require("../services/electricityService");
 const fileUtils = require("../utils/fileUtils");
 const router = express.Router();
+const fs = require("fs");
 
 // Middleware for parsing JSON data
 router.use(express.json()); // Parse application/json
@@ -56,6 +57,13 @@ router.delete("/:id", async (req, res) => {
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
+});
+
+router.get("/download-example-csv", (req, res) => {
+  const filePath = "uploads/electric_example.csv";
+  const csv = fs.readFileSync(filePath, "utf8");
+
+  res.send(csv);
 });
 
 module.exports = router;

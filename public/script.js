@@ -109,6 +109,53 @@ document.addEventListener("DOMContentLoaded", () => {
   // Upload Electricity Data
   const electricityForm = document.getElementById("upload-electricity-form");
   const electricityDataList = document.getElementById("electricity-data-list");
+  const electricDownloadExampleCSV = document.getElementById(
+    "electricity-download-example-csv"
+  );
+
+  // Download Electricity CSV Programmatically
+  const downloadElectricityCSV = () => {
+    // Make an API call to get the CSV file
+    fetch("/api/electricity/download-example-csv") // Assuming your server provides the CSV file at this endpoint
+      .then((response) => response.text())
+      .then((csvData) => {
+        // Create a Blob from the CSV data
+        const blob = new Blob([csvData], { type: "text/csv" });
+        const url = URL.createObjectURL(blob);
+
+        // Create a temporary anchor element to trigger the download
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "electricity_data.csv"; // Filename for the download
+        document.body.appendChild(link); // Append the link to the document
+        link.click(); // Programmatically click the link
+        document.body.removeChild(link); // Clean up by removing the link
+        URL.revokeObjectURL(url); // Revoke the blob URL to free memory
+      })
+      .catch((error) => console.error("Error fetching CSV:", error));
+  };
+
+  // Trigger the download when the button is clicked
+  const downloadButton = document.getElementById(
+    "electricity-download-example-csv"
+  );
+  downloadButton.addEventListener("click", downloadElectricityCSV);
+
+  electricDownloadExampleCSV.addEventListener("click", async () => {
+    try {
+      const response = await fetch("/api/electricity/download-example-csv");
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "electricity-example.csv";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    } catch (error) {
+      console.error("Error downloading example CSV:", error);
+    }
+  });
 
   electricityForm.addEventListener("submit", async (event) => {
     event.preventDefault();

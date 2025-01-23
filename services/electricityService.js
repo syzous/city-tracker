@@ -21,7 +21,6 @@ class ElectricityService {
 
   async updateElectricity(id, date, consumption) {
     const record = this.database.getById(id);
-    console.log("record", record);
     if (!record) throw new Error("Electricity data not found");
 
     record.date = date || record.date;
