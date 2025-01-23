@@ -16,6 +16,15 @@
         <section id="water-supply">
             <h2>Water Supply Data</h2>
             <button id="fetch-water-data">Fetch Water Data</button>
+            <form id="add-water-data-form">
+                <label for="water-date">Date:</label>
+                <input type="date" id="water-date" name="date" required>
+
+                <label for="water-amount">Water Collected (L):</label>
+                <input type="number" id="water-amount" name="waterCollected" required>
+
+                <button type="submit">Add Data</button>
+            </form>
             <ul id="water-data-list"></ul>
         </section>
 

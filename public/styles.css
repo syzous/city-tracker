@@ -62,12 +62,20 @@ button {
     cursor: pointer;
 }
 
+.water-data-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+
+}
+
 button:hover {
     background-color: #3700b3;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-form label {
+label {
     display: block;
     font-weight: bold;
     margin: 10px 0 5px;
